@@ -17,41 +17,66 @@ async function adicionar() {
 
 async function carregarTarefas() {
 const res = await fetch("https://taskflow-fullstack-821i.onrender.com/tarefas");
-  const tarefas = await res.json();
+const dados = await res.json();
+const tarefas = Array.isArray(dados) ? dados : dados.tarefas || [];
 
+
+const vazio = document.getElementById("vazio");
+
+if (tarefas.length === 0) {
+  vazio.style.display = "block";
+} else {
+  vazio.style.display = "none";
+}
   const lista = document.getElementById("lista");
   lista.innerHTML = "";
 
-  tarefas.forEach(t => {
-    const li = document.createElement("li");
+  tarefas.forEach(tarefa => {
+  const li = document.createElement("li");
 
-    const texto = document.createElement("span");
-    texto.innerText = t.tarefa;
+  const checkbox = document.createElement("input");
+  checkbox.type = "checkbox";
+  checkbox.checked = tarefa.concluida || false;
 
-    const botao = document.createElement("button");
-    botao.innerText = "❌";
+  checkbox.onchange = async () => {
+    await fetch(`https://taskflow-fullstack-821i.onrender.com/tarefas/${tarefa.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        tarefa: t.tarefa,
+        concluida: checkbox.checked
+      })
+    });
 
-      botao.onclick = async () => {
-    await fetch(`https://taskflow-fullstack-821i.onrender.com/tarefas/${t.id}`, {
-  method: "DELETE"
+    carregarTarefas();
+  };
+
+  const texto = document.createElement("span");
+  texto.innerText = t.tarefa;
+
+  texto.onclick = () => {
+    const novoTexto = prompt("Editar tarefa:", t.tarefa);
+    if (novoTexto) atualizarTarefa(tarefa.id, novoTexto);
+  };
+
+  const botao = document.createElement("button");
+  botao.innerText = "X";
+
+  botao.onclick = async () => {
+    await fetch(`https://taskflow-fullstack-821i.onrender.com/tarefas/${tarefa.id}`, {
+      method: "DELETE"
+    });
+
+    carregarTarefas();
+  };
+
+  // 
+  li.appendChild(checkbox);
+  li.appendChild(texto);
+  li.appendChild(botao);
+
+  lista.appendChild(li);
 });
-
-  carregarTarefas(); 
-};
-   
-      
-    
-    li.appendChild(texto);+
-    li.appendChild(botao);
-    lista.appendChild(li);
-   
-  }); 
-}
-
-// carregar ao abrir
-window.onload = () => {
-   carregarTarefas();
-  
-};
-
-
+} // 
