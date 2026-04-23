@@ -1,5 +1,6 @@
 # 🚀 TaskFlow - Fullstack Task Manager
 
+
 Sistema completo de gerenciamento de tarefas desenvolvido com arquitetura full stack, separando frontend e backend.
 
 ## 📌 Sobre o projeto
