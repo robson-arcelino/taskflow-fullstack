@@ -47,7 +47,7 @@ if (tarefas.length === 0) {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        tarefa: t.tarefa,
+        tarefa: tarefa.tarefa,
         concluida: checkbox.checked
       })
     });
@@ -56,10 +56,10 @@ if (tarefas.length === 0) {
   };
 
   const texto = document.createElement("span");
-  texto.innerText = t.tarefa;
+  texto.innerText = tarefa.tarefa;//
 
   texto.onclick = () => {
-    const novoTexto = prompt("Editar tarefa:", t.tarefa);
+    const novoTexto = prompt("Editar tarefa:", tarefa.tarefa);
     if (novoTexto) atualizarTarefa(tarefa.id, novoTexto);
   };
 
