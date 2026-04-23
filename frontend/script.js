@@ -1,7 +1,9 @@
 console.log("script carregado");
 async function adicionar() {
   const input = document.getElementById("tarefa");
-  const tarefa = input.value;
+ const tarefa = input.value;
+
+ if (!tarefa.trim()) return;
 
    await fetch("https://taskflow-fullstack-821i.onrender.com/tarefas", {
     method: "POST",
@@ -18,7 +20,7 @@ async function adicionar() {
 async function carregarTarefas() {
 const res = await fetch("https://taskflow-fullstack-821i.onrender.com/tarefas");
 const dados = await res.json();
-const tarefas = Array.isArray(dados) ? dados : dados.tarefas || [];
+const tarefas = Array.isArray(dados) ? dados : (dados.tarefas || []);
 
 
 const vazio = document.getElementById("vazio");
