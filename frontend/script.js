@@ -35,7 +35,11 @@ if (tarefas.length === 0) {
 
   tarefas.forEach(tarefa => {
   const li = document.createElement("li");
-
+ li.style.display = "flex";
+ li.style.alignItems = "center";
+ li.style.justifyContent = "space-between";
+ li.style.padding = "10px";
+ li.style.borderRadius = "8px";
   const checkbox = document.createElement("input");
   checkbox.type = "checkbox";
   checkbox.checked = tarefa.concluida || false;
@@ -75,9 +79,20 @@ if (tarefas.length === 0) {
   };
 
   // 
-  li.appendChild(checkbox);
-  li.appendChild(texto);
-  li.appendChild(botao);
+  li.style.display = "flex";
+li.style.alignItems = "center";
+li.style.justifyContent = "space-between";
+
+const esquerda = document.createElement("div");
+esquerda.style.display = "flex";
+esquerda.style.alignItems = "center";
+esquerda.style.gap = "10px";
+
+esquerda.appendChild(checkbox);
+esquerda.appendChild(texto);
+
+li.appendChild(esquerda);
+li.appendChild(botao);
 
   lista.appendChild(li);
 });
